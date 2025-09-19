@@ -1,7 +1,5 @@
 # 🎯 GitHub Action for Jira Issue Creation
 
-# 🎯 GitHub Action for Jira Issue Creation
-
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![GitHub Actions](https://github.com/solarekm/jira-issue/workflows/🧪%20Quality%20Assurance/badge.svg)
 ![CodeQL](https://github.com/solarekm/jira-issue/workflows/CodeQL/badge.svg)
