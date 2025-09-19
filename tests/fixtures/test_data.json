@@ -1,0 +1,150 @@
+{
+    "test_cases": [
+        {
+            "name": "Simple Task Creation",
+            "description": "Create a basic task with minimal required fields",
+            "inputs": {
+                "jira_server": "https://test.atlassian.net",
+                "jira_username": "test.user@example.com",
+                "jira_api_token": "ATATT3xFfGF0TestTokenValue123456789",
+                "project_key": "TEST",
+                "issue_type": "Task",
+                "issue_summary": "Simple test task",
+                "issue_description": "This is a test task created for validation",
+                "issue_priority": "Medium"
+            },
+            "expected_fields": [
+                "project",
+                "issuetype",
+                "summary", 
+                "description",
+                "priority"
+            ]
+        },
+        {
+            "name": "Bug with Labels and Assignee",
+            "description": "Create a bug report with labels and assignee",
+            "inputs": {
+                "jira_server": "https://company.atlassian.net",
+                "jira_username": "developer@company.com",
+                "jira_api_token": "ATATT3xFfGF0AnotherTestToken987654321",
+                "project_key": "BUG",
+                "issue_type": "Bug",
+                "issue_summary": "Critical login bug",
+                "issue_description": "Users cannot login with valid credentials",
+                "issue_priority": "High",
+                "assignee": "john.doe",
+                "issue_labels": "critical,login,frontend"
+            },
+            "expected_fields": [
+                "project",
+                "issuetype", 
+                "summary",
+                "description",
+                "priority",
+                "assignee",
+                "labels"
+            ]
+        },
+        {
+            "name": "Sub-task Creation",
+            "description": "Create a sub-task with parent issue",
+            "inputs": {
+                "jira_server": "https://dev.atlassian.net",
+                "jira_username": "qa@company.com", 
+                "jira_api_token": "ATATT3xFfGF0SubTaskTokenExample123",
+                "project_key": "DEV",
+                "issue_type": "Sub-task",
+                "parent_issue_key": "DEV-100",
+                "issue_summary": "Implement user authentication",
+                "issue_description": "Add OAuth 2.0 authentication flow to the application",
+                "issue_priority": "High",
+                "assignee": "backend.dev"
+            },
+            "expected_fields": [
+                "project",
+                "issuetype",
+                "summary",
+                "description", 
+                "priority",
+                "parent",
+                "assignee"
+            ]
+        },
+        {
+            "name": "Story with Multiple Labels",
+            "description": "Create a user story with multiple labels",
+            "inputs": {
+                "jira_server": "https://agile.company.com",
+                "jira_username": "product.owner@company.com",
+                "jira_api_token": "ATATT3xFfGF0StoryTokenValue456789",
+                "project_key": "STORY",
+                "issue_type": "Story",
+                "issue_summary": "User profile management",
+                "issue_description": "As a user, I want to manage my profile information so that I can keep my data up to date",
+                "issue_priority": "Medium",
+                "issue_labels": "user-story,profile,backend,frontend,database"
+            },
+            "expected_fields": [
+                "project",
+                "issuetype",
+                "summary",
+                "description",
+                "priority", 
+                "labels"
+            ]
+        }
+    ],
+    
+    "error_scenarios": [
+        {
+            "name": "Invalid URL",
+            "description": "Test with malformed Jira server URL",
+            "inputs": {
+                "jira_server": "not-a-valid-url",
+                "project_key": "TEST"
+            },
+            "expected_error": "ValidationError"
+        },
+        {
+            "name": "Malicious Input",
+            "description": "Test with potentially malicious content",
+            "inputs": {
+                "jira_server": "https://test.atlassian.net",
+                "issue_summary": "Test $(rm -rf /) injection",
+                "project_key": "TEST"
+            },
+            "expected_error": "ValidationError"
+        },
+        {
+            "name": "Missing Parent for Sub-task",
+            "description": "Test sub-task without parent issue",
+            "inputs": {
+                "jira_server": "https://test.atlassian.net", 
+                "issue_type": "Sub-task",
+                "project_key": "TEST"
+            },
+            "expected_error": "ValidationError"
+        }
+    ],
+
+    "mock_responses": {
+        "successful_issue_creation": {
+            "key": "TEST-123",
+            "fields": {
+                "summary": "Test Issue",
+                "description": "Test Description"
+            }
+        },
+        "successful_user_validation": {
+            "displayName": "Test User",
+            "emailAddress": "test.user@example.com"
+        },
+        "successful_parent_issue": {
+            "key": "TEST-100",
+            "fields": {
+                "summary": "Parent Issue"
+            }
+        }
+    }
+}

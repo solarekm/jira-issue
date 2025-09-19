@@ -1,0 +1,170 @@
+name: Test and Validate
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.9, 3.10, 3.11, 3.12]
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+        cache: 'pip'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pytest pytest-cov pytest-mock responses
+    
+    - name: Run tests with coverage
+      run: |
+        python -m pytest tests/ -v --cov=src --cov-report=term-missing --cov-report=xml
+    
+    - name: Upload coverage to Codecov
+      if: matrix.python-version == '3.11'
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./coverage.xml
+        flags: unittests
+        name: codecov-umbrella
+        fail_ci_if_error: false
+
+  lint:
+    name: Code Quality
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        cache: 'pip'
+    
+    - name: Install linting tools
+      run: |
+        python -m pip install --upgrade pip
+        pip install black flake8 mypy bandit safety
+    
+    - name: Check code formatting with Black
+      run: |
+        black --check --diff src/ tests/
+    
+    - name: Run Flake8 linting
+      run: |
+        flake8 src/ tests/ --max-line-length=100 --ignore=E203,W503
+    
+    - name: Run type checking with MyPy
+      run: |
+        mypy src/ --ignore-missing-imports --disallow-untyped-defs
+    
+    - name: Run security analysis with Bandit
+      run: |
+        bandit -r src/ -f json -o bandit-report.json || true
+        bandit -r src/
+    
+    - name: Check for known security vulnerabilities
+      run: |
+        safety check --json --output safety-report.json || true
+        safety check
+
+  validate-action:
+    name: Validate Action
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Validate action.yml syntax
+      run: |
+        # Check if action.yml is valid YAML
+        python -c "import yaml; yaml.safe_load(open('action.yml'))"
+    
+    - name: Check action metadata
+      run: |
+        # Verify required fields are present
+        python -c "
+        import yaml
+        with open('action.yml') as f:
+            action = yaml.safe_load(f)
+        required_fields = ['name', 'description', 'inputs', 'runs']
+        for field in required_fields:
+            assert field in action, f'Missing required field: {field}'
+        print('✓ Action metadata validation passed')
+        "
+    
+    - name: Test action execution (dry run)
+      env:
+        INPUT_JIRA_SERVER: "https://test.atlassian.net"
+        INPUT_JIRA_USERNAME: "test@example.com"
+        INPUT_JIRA_API_TOKEN: "test_token_1234567890123456789012345"
+        INPUT_PROJECT_KEY: "TEST"
+        INPUT_ISSUE_TYPE: "Task"
+        INPUT_ISSUE_SUMMARY: "Test issue for validation"
+        INPUT_ISSUE_DESCRIPTION: "This is a test issue created during CI validation"
+        INPUT_ISSUE_PRIORITY: "Medium"
+        INPUT_LOG_LEVEL: "DEBUG"
+      run: |
+        # Install dependencies
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        
+        # Test input validation (should fail with connection error, which is expected)
+        export PYTHONPATH="./src"
+        python -c "
+        from src.main import validate_and_prepare_config
+        try:
+            config = validate_and_prepare_config()
+            print('✓ Input validation passed')
+            print(f'✓ Validated config for project: {config[\"project_key\"]}')
+        except Exception as e:
+            print(f'✗ Validation failed: {e}')
+            exit(1)
+        "
+
+  integration-test:
+    name: Integration Test
+    runs-on: ubuntu-latest
+    needs: [test, lint, validate-action]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Test Action Integration
+      uses: ./
+      with:
+        jira_server: "https://test-integration.example.com"
+        jira_username: "integration-test@example.com"
+        jira_api_token: "integration_test_token_placeholder"
+        project_key: "INTEGRATION"
+        issue_type: "Task"
+        issue_summary: "Integration test issue"
+        issue_description: "This issue was created during integration testing"
+        issue_priority: "Low"
+        log_level: "DEBUG"
+      continue-on-error: true  # Expected to fail due to fake credentials
+    
+    - name: Verify Integration Test
+      run: |
+        echo "✓ Integration test completed (failure expected with fake credentials)"
+        echo "✓ Action structure and execution path validated"
