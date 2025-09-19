@@ -76,6 +76,7 @@ jira-issue/
 │       └── release.yml           # 🚀 Release Management
 │   # Note: 🔒 Security Analysis via GitHub's default CodeQL setup
 ├── src/                          # Python source code
+│   ├── __init__.py              # Package initialization
 │   ├── main.py                   # Main entry point
 │   ├── jira_client.py           # Jira API client
 │   ├── validators.py            # Input validation
@@ -83,10 +84,11 @@ jira-issue/
 │   └── utils.py                 # Utility functions
 ├── tests/                        # Test suite
 │   ├── conftest.py              # Test configuration
+│   ├── run_tests.py             # Test runner script
 │   ├── test_main.py             # Main module tests
 │   ├── test_jira_client.py      # Client tests
 │   ├── test_validators.py       # Validation tests
-│   └── test_integration.py      # Integration tests
+│   └── test_utils.py            # Utility tests
 └── docs/                         # Documentation
     ├── development.md            # Developer guide  
     ├── examples.md              # Practical examples and use cases

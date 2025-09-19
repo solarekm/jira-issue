@@ -6,8 +6,6 @@ The Jira Issue Action handles sensitive information including Jira API tokens an
 
 ## 🛡️ Security Features
 
-## 🛡️ Security Features
-
 ### 🤖 Automated Security
 - **Dependabot**: Automatic dependency updates for security vulnerabilities
 - **CodeQL**: Static analysis security testing on every commit

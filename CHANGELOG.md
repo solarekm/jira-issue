@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### 🔧 **Improvements & Fixes**
+
+### ✨ Added
+- **📚 Complete Documentation Review**: Comprehensive analysis and updates of all *.md files
+- **🔗 Documentation Links**: Added missing links to docs/SECURITY_CONSTRAINTS.md in README
+- **📁 Project Structure**: Updated file structure documentation to match reality
+
+### 🐛 Fixed
+- **📝 Duplicate Headers**: Removed duplicate header in README.md and SECURITY.md
+- **📦 Version References**: Updated all examples from @v1 to @v2 for consistency
+- **🔧 Release Workflow**: Replaced deprecated actions/create-release@v1 with modern gh CLI
+- **📋 File Structure**: Corrected tests/ structure documentation (removed non-existent test_integration.py, added missing files)
+
 ### Planned
 - Support for custom fields
 - Bulk issue creation
