@@ -1,4 +1,4 @@
-name: "🤖 Auto-merge Dependabot"
+name: "🤖 Dependency Updates"
 
 on:
   pull_request:

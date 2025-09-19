@@ -1,4 +1,4 @@
-name: Release
+name: "🚀 Release Management"
 
 on:
   push:
@@ -10,22 +10,17 @@ permissions:
   packages: read
 
 jobs:
-  test:
-    name: Run Tests Before Release
-    uses: ./.github/workflows/test.yml
-
   release:
-    name: Create Release
+    name: 🚀 Create Release
     runs-on: ubuntu-latest
-    needs: test
     
     steps:
-    - name: Checkout code
+    - name: 📥 Checkout code
       uses: actions/checkout@v4
       with:
         fetch-depth: 0
     
-    - name: Get version from tag
+    - name: 🏷️ Get version from tag
       id: get_version
       run: |
         echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
@@ -68,7 +63,7 @@ jobs:
           - name: Create Jira Issue
             uses: solarekm/jira-issue@${{ steps.get_version.outputs.VERSION }}
             with:
-              jira_server: ${{ secrets.JIRA_SERVER }}
+              jira_server: "https://your-domain.atlassian.net"
               jira_username: ${{ secrets.JIRA_USERNAME }}
               jira_api_token: ${{ secrets.JIRA_API_TOKEN }}
               project_key: "YOUR_PROJECT"

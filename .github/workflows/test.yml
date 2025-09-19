@@ -1,4 +1,4 @@
-name: "🧪 Test Suite"
+name: "🧪 Quality Assurance"
 
 on:
   push:
@@ -6,6 +6,8 @@ on:
   pull_request:
     branches: [ main, master ]
   workflow_dispatch:
+  workflow_call:
+    # Allow this workflow to be called from other workflows
 
 jobs:
   test:
