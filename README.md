@@ -1,20 +1,11 @@
 # 🎯 GitHub Action for Jira Issue Creation
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![GitHub Actions](https://github.com/solarekm/jira-issue/workflows/🧪%20Quality%20Assuran      - name: Create Jira Issue
-        uses: solarekm/jira-issue@v2/badge.svg)
+![GitHub Actions](https://github.com/solarekm/jira-issue/workflows/🧪%20Quality%20Assurance/badge.svg)
 ![CodeQL](https://github.com/solarekm/jira-issue/workflows/CodeQL/badge.svg)
 ![Jira](https://img.shields.io/badge/Jira-Atlassian-blue.svg)
 ![Python](https://img.shields.io/badge/Python-3.9%20|%203.10%20|%203.11%20|%203.12-yellow.svg)
-![Security](https://img.shields.io/badge/Security-Hardened-gr### 📖 Documentation
-
-- **🏠 Main Documentation**: This README for usage and examples
-- **📚 Examples & Use Cases**: [docs/examples.md](docs/examples.md) - Practical examples and integration patterns
-- **🚨 Troubleshooting Guide**: [docs/troubleshooting.md](docs/troubleshooting.md) - Common issues and solutions
-- **🔧 Development Guide**: [docs/development.md](docs/development.md) - Architecture and development setup
-- **🔒 Security Constraints**: [docs/SECURITY_CONSTRAINTS.md](docs/SECURITY_CONSTRAINTS.md) - Security validation guidelines
-- **📋 API Reference**: [Jira REST API Documentation](https://developer.atlassian.com/cloud/jira/platform/rest/v3/intro/)
-- **⚙️ GitHub Actions**: [GitHub Actions Documentation](https://docs.github.com/en/actions)
+![Security](https://img.shields.io/badge/Security-Hardened-green.svg)
 ![Dependabot](https://img.shields.io/badge/Dependabot-Enabled-brightgreen.svg)
 
 A robust, enterprise-grade GitHub Action for creating Jira issues and sub-tasks with advanced security features, comprehensive input validation, modular architecture, and extensive testing. Built with Python 3.11+ and designed for production environments with zero-trust security principles.
@@ -516,9 +507,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ### 📖 Documentation
 
 - **🏠 Main Documentation**: This README for usage and examples
-- **� Examples & Use Cases**: [docs/examples.md](docs/examples.md) - Practical examples and integration patterns
+- **📚 Examples & Use Cases**: [docs/examples.md](docs/examples.md) - Practical examples and integration patterns
 - **🚨 Troubleshooting Guide**: [docs/troubleshooting.md](docs/troubleshooting.md) - Common issues and solutions
-- **�🔧 Development Guide**: [docs/development.md](docs/development.md) - Architecture and development setup
+- **🔧 Development Guide**: [docs/development.md](docs/development.md) - Architecture and development setup
+- **🔒 Security Constraints**: [docs/SECURITY_CONSTRAINTS.md](docs/SECURITY_CONSTRAINTS.md) - Security validation guidelines
 - **📋 API Reference**: [Jira REST API Documentation](https://developer.atlassian.com/cloud/jira/platform/rest/v3/intro/)
 - **⚙️ GitHub Actions**: [GitHub Actions Documentation](https://docs.github.com/en/actions)
 
