@@ -5,16 +5,18 @@ This module defines all custom exceptions used throughout the application
 for better error handling and debugging.
 """
 
+from typing import Optional
+
 
 class JiraActionError(Exception):
     """Base exception for all Jira Action errors."""
 
-    def __init__(self, message: str, details: str = None):
+    def __init__(self, message: str, details: Optional[str] = None) -> None:
         super().__init__(message)
         self.message = message
         self.details = details
 
-    def __str__(self):
+    def __str__(self) -> str:
         if self.details:
             return f"{self.message}: {self.details}"
         return self.message

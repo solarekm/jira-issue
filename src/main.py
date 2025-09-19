@@ -13,8 +13,18 @@ from typing import Dict, Any
 
 from src.validators import InputValidator
 from src.jira_client import JiraClient
-from src.utils import setup_logging, EnvironmentHelper, GitHubIntegration, mask_sensitive_data
-from src.exceptions import ValidationError, JiraConnectionError, JiraOperationError, JiraActionError
+from src.utils import (
+    setup_logging,
+    EnvironmentHelper,
+    GitHubIntegration,
+    mask_sensitive_data,
+)
+from src.exceptions import (
+    ValidationError,
+    JiraConnectionError,
+    JiraOperationError,
+    JiraActionError,
+)
 
 # Add src directory to path for imports
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -48,25 +58,35 @@ def validate_and_prepare_config() -> Dict[str, Any]:
             "project_key": validator.validate_project_key(raw_inputs["project_key"]),
             "issue_type": validator.validate_issue_type(raw_inputs["issue_type"]),
             "issue_summary": validator.validate_summary(raw_inputs["issue_summary"]),
-            "issue_description": validator.validate_description(raw_inputs["issue_description"]),
+            "issue_description": validator.validate_description(
+                raw_inputs["issue_description"]
+            ),
             "issue_priority": validator.validate_priority(raw_inputs["issue_priority"]),
-            "parent_issue_key": validator.validate_parent_issue_key(raw_inputs["parent_issue_key"]),
+            "parent_issue_key": validator.validate_parent_issue_key(
+                raw_inputs["parent_issue_key"]
+            ),
             "assignee": raw_inputs["assignee"] if raw_inputs["assignee"] else None,
             "labels": validator.validate_labels(raw_inputs["issue_labels"]),
-            "attachment_paths": validator.validate_attachment_paths(raw_inputs["attachment_paths"]),
+            "attachment_paths": validator.validate_attachment_paths(
+                raw_inputs["attachment_paths"]
+            ),
         }
 
         # Validate assignee if provided
         if config["assignee"]:
-            config["assignee"] = validator.validate_username(config["assignee"])
+            config["assignee"] = validator.validate_username(str(config["assignee"]))
 
         # Additional validation for sub-tasks
-        if config["issue_type"].lower() == "sub-task" and not config["parent_issue_key"]:
+        if str(config["issue_type"]).lower() == "sub-task" and not config.get(
+            "parent_issue_key"
+        ):
             raise ValidationError("Parent issue key is required for Sub-task type")
 
         # Log configuration (with sensitive data masked)
         log_config = config.copy()
-        log_config["jira_api_token"] = mask_sensitive_data(log_config["jira_api_token"])
+        log_config["jira_api_token"] = mask_sensitive_data(
+            str(log_config["jira_api_token"])
+        )
         logger.info("Configuration validated successfully")
         logger.debug(f"Validated configuration: {log_config}")
 
@@ -121,10 +141,12 @@ def main() -> None:
         config = validate_and_prepare_config()
 
         # Log action summary
-        logger.info(f"Creating {config['issue_type']} in project {config['project_key']}")
-        summary_preview = config['issue_summary'][:50]
-        if len(config['issue_summary']) > 50:
-            summary_preview += '...'
+        logger.info(
+            f"Creating {config['issue_type']} in project {config['project_key']}"
+        )
+        summary_preview = config["issue_summary"][:50]
+        if len(config["issue_summary"]) > 50:
+            summary_preview += "..."
         logger.info(f"Summary: {summary_preview}")
 
         # Create Jira issue
@@ -132,12 +154,16 @@ def main() -> None:
 
         # Update GitHub Actions outputs
         GitHubIntegration.set_output("issue_key", issue_key)
-        GitHubIntegration.set_output("issue_url", f"{config['jira_server']}/browse/{issue_key}")
+        GitHubIntegration.set_output(
+            "issue_url", f"{config['jira_server']}/browse/{issue_key}"
+        )
 
         # Update GitHub step summary
         GitHubIntegration.update_step_summary(config["jira_server"], issue_key)
 
-        logger.info(f"=== Action completed successfully! Issue created: {issue_key} ===")
+        logger.info(
+            f"=== Action completed successfully! Issue created: {issue_key} ==="
+        )
 
     except ValidationError as e:
         logger.error(f"Input validation failed: {e}")

@@ -46,7 +46,7 @@ class JiraClient:
 
             # Test connection by getting server info
             server_info = self.jira.server_info()
-            server_title = server_info.get('serverTitle', 'Unknown')
+            server_title = server_info.get("serverTitle", "Unknown")
             self.logger.info(f"Successfully connected to Jira server: {server_title}")
 
         except JIRAError as e:
@@ -68,7 +68,9 @@ class JiraClient:
             JiraOperationError: If issue creation fails
         """
         try:
-            self.logger.info(f"Creating {config['issue_type']} in project {config['project_key']}")
+            self.logger.info(
+                f"Creating {config['issue_type']} in project {config['project_key']}"
+            )
 
             # Validate assignee if provided
             assignee_valid = False
@@ -76,14 +78,19 @@ class JiraClient:
                 assignee_valid = self._validate_assignee(config["assignee"])
 
             # Validate parent issue for sub-tasks
-            if config.get("parent_issue_key") and config["issue_type"].lower() == "sub-task":
+            if (
+                config.get("parent_issue_key")
+                and config["issue_type"].lower() == "sub-task"
+            ):
                 self._validate_parent_issue(config["parent_issue_key"])
 
             # Prepare issue data
             issue_data = self._prepare_issue_data(config, assignee_valid)
 
             # Create the issue
-            self.logger.debug(f"Creating issue with data: {self._sanitize_for_log(issue_data)}")
+            self.logger.debug(
+                f"Creating issue with data: {self._sanitize_for_log(issue_data)}"
+            )
             issue = self.jira.create_issue(fields=issue_data)
 
             self.logger.info(f"Successfully created issue: {issue.key}")
@@ -96,6 +103,7 @@ class JiraClient:
 
         except JIRAError as e:
             self._handle_operation_error(e, "create issue")
+            raise  # This will never be reached, but satisfies mypy
         except Exception as e:
             raise JiraOperationError(f"Unexpected error creating issue: {str(e)}")
 
@@ -111,7 +119,9 @@ class JiraClient:
         """
         try:
             user = self.jira.user(assignee)
-            self.logger.info(f"Assignee '{assignee}' is valid (Display name: {user.displayName})")
+            self.logger.info(
+                f"Assignee '{assignee}' is valid (Display name: {user.displayName})"
+            )
             return True
         except JIRAError as e:
             if e.status_code == 404:
@@ -137,16 +147,24 @@ class JiraClient:
         """
         try:
             parent_issue = self.jira.issue(parent_key)
-            self.logger.info(f"Parent issue '{parent_key}' is valid: {parent_issue.fields.summary}")
+            self.logger.info(
+                f"Parent issue '{parent_key}' is valid: {parent_issue.fields.summary}"
+            )
         except JIRAError as e:
             if e.status_code == 404:
                 raise JiraOperationError(f"Parent issue '{parent_key}' not found")
             else:
-                raise JiraOperationError(f"Cannot access parent issue '{parent_key}': {str(e)}")
+                raise JiraOperationError(
+                    f"Cannot access parent issue '{parent_key}': {str(e)}"
+                )
         except Exception as e:
-            raise JiraOperationError(f"Error validating parent issue '{parent_key}': {str(e)}")
+            raise JiraOperationError(
+                f"Error validating parent issue '{parent_key}': {str(e)}"
+            )
 
-    def _prepare_issue_data(self, config: Dict[str, Any], assignee_valid: bool) -> Dict[str, Any]:
+    def _prepare_issue_data(
+        self, config: Dict[str, Any], assignee_valid: bool
+    ) -> Dict[str, Any]:
         """
         Prepare issue data structure for Jira API.
 
@@ -170,7 +188,10 @@ class JiraClient:
             issue_data["labels"] = config["labels"]
 
         # Add parent for sub-tasks
-        if config.get("parent_issue_key") and config["issue_type"].lower() == "sub-task":
+        if (
+            config.get("parent_issue_key")
+            and config["issue_type"].lower() == "sub-task"
+        ):
             issue_data["parent"] = {"key": config["parent_issue_key"]}
             self.logger.info(f"Setting parent issue: {config['parent_issue_key']}")
 
@@ -192,7 +213,9 @@ class JiraClient:
         Raises:
             AttachmentError: If attachment operation fails
         """
-        self.logger.info(f"Adding {len(attachment_paths)} attachment(s) to issue {issue.key}")
+        self.logger.info(
+            f"Adding {len(attachment_paths)} attachment(s) to issue {issue.key}"
+        )
 
         successful_attachments = 0
         failed_attachments = []
@@ -232,7 +255,7 @@ class JiraClient:
             self.logger.info(f"Successfully attached {successful_attachments} file(s)")
 
         if failed_attachments:
-            failed_files = ', '.join(failed_attachments)
+            failed_files = ", ".join(failed_attachments)
             self.logger.warning(
                 f"Failed to attach {len(failed_attachments)} file(s): {failed_files}"
             )
@@ -286,7 +309,9 @@ class JiraClient:
 
         if status_code in error_messages:
             message = error_messages[status_code]
-            details = f"HTTP {status_code}: {getattr(error, 'text', 'No additional details')}"
+            details = (
+                f"HTTP {status_code}: {getattr(error, 'text', 'No additional details')}"
+            )
         else:
             message = "Connection to Jira failed"
             details = f"HTTP {status_code}: {str(error)}"
@@ -322,7 +347,9 @@ class JiraClient:
 
         if status_code in error_messages:
             message = error_messages[status_code]
-            details = f"HTTP {status_code}: {getattr(error, 'text', 'No additional details')}"
+            details = (
+                f"HTTP {status_code}: {getattr(error, 'text', 'No additional details')}"
+            )
         else:
             message = f"Operation '{operation}' failed"
             details = f"HTTP {status_code}: {str(error)}"

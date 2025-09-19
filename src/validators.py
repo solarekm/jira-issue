@@ -58,7 +58,9 @@ class InputValidator:
             if parsed.scheme not in ["http", "https"]:
                 raise ValidationError("Jira server URL must use HTTP or HTTPS protocol")
             if not parsed.netloc:
-                raise ValidationError("Invalid Jira server URL format - missing hostname")
+                raise ValidationError(
+                    "Invalid Jira server URL format - missing hostname"
+                )
         except ValidationError:
             # Re-raise ValidationError without wrapping
             raise
@@ -251,7 +253,9 @@ class InputValidator:
 
         # Basic token format validation - Atlassian tokens are typically long
         if len(token) < 20:
-            raise ValidationError("API token appears to be too short (minimum 20 characters)")
+            raise ValidationError(
+                "API token appears to be too short (minimum 20 characters)"
+            )
 
         # Check for obviously invalid tokens
         if token.lower() in ["password", "token", "secret", "key"]:
@@ -279,7 +283,9 @@ class InputValidator:
 
         # Jira issue keys format: PROJECT-123
         if not re.match(r"^[A-Z][A-Z0-9_]*-\d+$", parent_key):
-            raise ValidationError("Parent issue key must be in format PROJECT-123 (e.g., PROJ-123)")
+            raise ValidationError(
+                "Parent issue key must be in format PROJECT-123 (e.g., PROJ-123)"
+            )
 
         return parent_key
 
@@ -341,7 +347,9 @@ class InputValidator:
         for path in path_list:
             # Security check - prevent directory traversal
             if ".." in path or path.startswith("/"):
-                raise ValidationError(f"Invalid file path '{path}' - potential security risk")
+                raise ValidationError(
+                    f"Invalid file path '{path}' - potential security risk"
+                )
 
             # Check if file exists and is readable
             if not os.path.exists(path):

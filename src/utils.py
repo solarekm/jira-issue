@@ -29,7 +29,9 @@ class GitHubIntegration:
 
         try:
             issue_url = f"{jira_server}/browse/{issue_key}"
-            summary_line = f"✅ **Jira Issue Created:** [{issue_key}]({issue_url})\\n\\n"
+            summary_line = (
+                f"✅ **Jira Issue Created:** [{issue_key}]({issue_url})\\n\\n"
+            )
 
             # Append to existing summary
             with open(summary_path, "a", encoding="utf-8") as f:
@@ -124,16 +126,26 @@ class EnvironmentHelper:
         return {
             "jira_server": EnvironmentHelper.get_required_env("INPUT_JIRA_SERVER"),
             "jira_username": EnvironmentHelper.get_required_env("INPUT_JIRA_USERNAME"),
-            "jira_api_token": EnvironmentHelper.get_required_env("INPUT_JIRA_API_TOKEN"),
+            "jira_api_token": EnvironmentHelper.get_required_env(
+                "INPUT_JIRA_API_TOKEN"
+            ),
             "project_key": EnvironmentHelper.get_required_env("INPUT_PROJECT_KEY"),
             "issue_type": EnvironmentHelper.get_required_env("INPUT_ISSUE_TYPE"),
             "issue_summary": EnvironmentHelper.get_required_env("INPUT_ISSUE_SUMMARY"),
-            "issue_description": EnvironmentHelper.get_required_env("INPUT_ISSUE_DESCRIPTION"),
-            "issue_priority": EnvironmentHelper.get_required_env("INPUT_ISSUE_PRIORITY"),
-            "parent_issue_key": EnvironmentHelper.get_optional_env("INPUT_PARENT_ISSUE_KEY"),
+            "issue_description": EnvironmentHelper.get_required_env(
+                "INPUT_ISSUE_DESCRIPTION"
+            ),
+            "issue_priority": EnvironmentHelper.get_required_env(
+                "INPUT_ISSUE_PRIORITY"
+            ),
+            "parent_issue_key": EnvironmentHelper.get_optional_env(
+                "INPUT_PARENT_ISSUE_KEY"
+            ),
             "assignee": EnvironmentHelper.get_optional_env("INPUT_ASSIGNEE"),
             "issue_labels": EnvironmentHelper.get_optional_env("INPUT_ISSUE_LABELS"),
-            "attachment_paths": EnvironmentHelper.get_optional_env("INPUT_ATTACHMENT_PATHS"),
+            "attachment_paths": EnvironmentHelper.get_optional_env(
+                "INPUT_ATTACHMENT_PATHS"
+            ),
         }
 
 
@@ -148,7 +160,8 @@ def setup_logging(level: str = "INFO") -> None:
 
     # Configure logging format
     formatter = logging.Formatter(
-        fmt="%(asctime)s - %(name)s - %(levelname)s - %(message)s", datefmt="%Y-%m-%d %H:%M:%S"
+        fmt="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+        datefmt="%Y-%m-%d %H:%M:%S",
     )
 
     # Configure root logger
