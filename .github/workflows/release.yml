@@ -43,44 +43,49 @@ jobs:
         echo "$CHANGELOG" >> $GITHUB_OUTPUT
         echo "EOF" >> $GITHUB_OUTPUT
     
-    - name: Create GitHub Release
-      uses: actions/create-release@v1
+    - name: 📋 Prepare release notes
+      id: release_notes
+      run: |
+        # Prepare release notes file
+        cat > release_notes.md << 'EOF'
+        ## Changes in ${{ steps.get_version.outputs.VERSION }}
+        
+        ${{ steps.changelog.outputs.CHANGELOG }}
+        
+        ## Installation
+        
+        Use this action in your workflow:
+        
+        ```yaml
+        - name: Create Jira Issue
+          uses: solarekm/jira-issue@${{ steps.get_version.outputs.VERSION }}
+          with:
+            jira_server: "https://your-domain.atlassian.net"
+            jira_username: ${{ secrets.JIRA_USERNAME }}
+            jira_api_token: ${{ secrets.JIRA_API_TOKEN }}
+            project_key: "YOUR_PROJECT"
+            issue_type: "Task"
+            issue_summary: "Your issue title"
+            issue_description: "Your issue description"
+            issue_priority: "Medium"
+        ```
+        
+        ## What's Changed
+        - Enhanced security with input validation
+        - Modular architecture for better maintainability
+        - Comprehensive error handling
+        - Full test coverage
+        - Detailed logging and debugging capabilities
+        EOF
+
+    - name: 🚀 Create GitHub Release
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ steps.get_version.outputs.VERSION }}
-        release_name: Release ${{ steps.get_version.outputs.VERSION }}
-        body: |
-          ## Changes in ${{ steps.get_version.outputs.VERSION }}
-          
-          ${{ steps.changelog.outputs.CHANGELOG }}
-          
-          ## Installation
-          
-          Use this action in your workflow:
-          
-          ```yaml
-          - name: Create Jira Issue
-            uses: solarekm/jira-issue@${{ steps.get_version.outputs.VERSION }}
-            with:
-              jira_server: "https://your-domain.atlassian.net"
-              jira_username: ${{ secrets.JIRA_USERNAME }}
-              jira_api_token: ${{ secrets.JIRA_API_TOKEN }}
-              project_key: "YOUR_PROJECT"
-              issue_type: "Task"
-              issue_summary: "Your issue title"
-              issue_description: "Your issue description"
-              issue_priority: "Medium"
-          ```
-          
-          ## What's Changed
-          - Enhanced security with input validation
-          - Modular architecture for better maintainability
-          - Comprehensive error handling
-          - Full test coverage
-          - Detailed logging and debugging capabilities
-        draft: false
-        prerelease: false
+      run: |
+        gh release create "${{ steps.get_version.outputs.VERSION }}" \
+          --title "Release ${{ steps.get_version.outputs.VERSION }}" \
+          --notes-file release_notes.md \
+          --latest
 
   update-major-tag:
     name: Update Major Version Tag
