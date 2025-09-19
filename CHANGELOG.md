@@ -13,6 +13,59 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Issue templates
 - Enhanced attachment validation
 
+## [2.1.0] - 2025-09-19
+
+### 🔧 **Production Hardening & Quality Assurance**
+
+This release focuses on strict CI/CD enforcement and production-grade code quality standards.
+
+### ✨ Added
+- **🚫 Zero-tolerance CI Policy**: Strict enforcement of all quality gates
+- **🎨 Black Code Formatting**: 100% PEP8 compliance with automated formatting
+- **📏 Enhanced Flake8 Linting**: Comprehensive style checking with 100-character line limits
+- **🔍 MyPy Type Checking**: Full type safety with `--disallow-untyped-defs`
+- **🔒 Bandit Security Analysis**: Automated security vulnerability scanning
+- **🛡️ Safety Dependency Scanning**: Known vulnerability detection in dependencies
+- **📊 Matrix Testing**: Python 3.9, 3.10, 3.11, 3.12 compatibility validation
+
+### 🐛 Fixed
+- **ValidationError Double-wrapping**: Corrected exception handling in validators module
+- **Import Statement Cleanup**: Removed unused imports causing F401 violations
+- **Code Quality Violations**: Fixed 100+ PEP8 and style violations across all modules
+- **Type Annotation Issues**: Added proper type hints for MyPy compliance
+- **Line Length Violations**: Reformatted long lines to meet 100-character limit
+- **Test Security Validation**: Updated tests to work with enhanced security patterns
+
+### 🛡️ Security
+- **Enhanced Pattern Detection**: Improved malicious content validation patterns
+- **File Path Security**: Strengthened attachment path validation against directory traversal
+- **Input Sanitization**: Additional protection against injection attacks
+- **Error Message Safety**: Prevented sensitive data leakage in error outputs
+
+### 🔧 Changed
+- **BREAKING**: Stricter input validation may reject previously accepted edge cases
+- **CI Pipeline**: No tolerance for quality violations - all checks must pass
+- **Error Handling**: More specific error messages with security considerations
+- **Test Coverage**: Enhanced test scenarios for edge cases and security validation
+
+### 🔄 **Dependabot Workflow Improvements**
+- **🤖 Workflow Naming**: Renamed "🤖 Dependency Updates" to "🔀 Auto-merge Dependencies"
+- **📝 Enhanced Descriptions**: Clearer job and step descriptions for better UI clarity
+- **🔗 Documentation Updates**: Comprehensive README and CONTRIBUTING.md updates
+
+### 🧪 Testing
+- **Security Test Cases**: Comprehensive validation of security pattern detection
+- **Edge Case Coverage**: Additional test scenarios for malicious input handling
+- **CI Integration**: All 75 tests passing across all Python versions
+- **Quality Gates**: Integrated black, flake8, mypy, bandit, and safety checks
+
+### 📚 Documentation
+- **README Enhancement**: Updated with latest security features and CI status
+- **CONTRIBUTING Updates**: Comprehensive Dependabot workflow explanation
+- **Development Guide**: Enhanced development workflow documentation
+
+---
+
 ## [2.0.0] - 2024-09-19
 
 ### 🚀 Major Refactoring Release

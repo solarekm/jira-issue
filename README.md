@@ -504,7 +504,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ### 📖 Documentation
 
 - **🏠 Main Documentation**: This README for usage and examples
-- **🔧 Development Guide**: [docs/development.md](docs/development.md) - Architecture and development setup
+- **� Examples & Use Cases**: [docs/examples.md](docs/examples.md) - Practical examples and integration patterns
+- **🚨 Troubleshooting Guide**: [docs/troubleshooting.md](docs/troubleshooting.md) - Common issues and solutions
+- **�🔧 Development Guide**: [docs/development.md](docs/development.md) - Architecture and development setup
 - **📋 API Reference**: [Jira REST API Documentation](https://developer.atlassian.com/cloud/jira/platform/rest/v3/intro/)
 - **⚙️ GitHub Actions**: [GitHub Actions Documentation](https://docs.github.com/en/actions)
 
