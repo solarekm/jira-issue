@@ -37,7 +37,7 @@ jobs:
     
     - name: Run tests with coverage
       run: |
-        python -m pytest tests/ -v --cov=src --cov-report=term-missing --cov-report=xml --tb=short || echo "⚠️ Some tests failed, but continuing CI..."
+        python -m pytest tests/ -v --cov=src --cov-report=term-missing --cov-report=xml --tb=short
     
     - name: Upload coverage to Codecov
       if: matrix.python-version == '3.11'
@@ -69,25 +69,25 @@ jobs:
     
     - name: Check code formatting with Black
       run: |
-        black --check --diff src/ tests/ || echo "⚠️ Code formatting issues found, but continuing..."
+        black --check --diff src/ tests/
     
     - name: Run Flake8 linting
       run: |
-        flake8 src/ tests/ --max-line-length=100 --ignore=E203,W503 || echo "⚠️ Linting issues found, but continuing..."
+        flake8 src/ tests/ --max-line-length=100 --ignore=E203,W503
     
     - name: Run type checking with MyPy
       run: |
-        mypy src/ --ignore-missing-imports --disallow-untyped-defs || echo "⚠️ Type checking issues found, but continuing..."
+        mypy src/ --ignore-missing-imports --disallow-untyped-defs
     
     - name: Run security analysis with Bandit
       run: |
         bandit -r src/ -f json -o bandit-report.json || true
-        bandit -r src/ || echo "⚠️ Security issues found, but continuing..."
+        bandit -r src/
     
     - name: Check for known security vulnerabilities
       run: |
         safety check --json --output safety-report.json || true
-        safety check || echo "⚠️ Vulnerability check completed with warnings"
+        safety check
 
   validate-action:
     name: Validate Action
