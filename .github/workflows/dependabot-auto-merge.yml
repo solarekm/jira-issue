@@ -1,4 +1,8 @@
-name: "🤖 Dependency Updates"
+name: "🔀 Auto-merge Dependencies"
+
+# This workflow automatically merges Dependabot PRs for safe updates
+# Works in conjunction with .github/dependabot.yml configuration
+# Only merges patch/minor updates that pass all CI checks
 
 on:
   pull_request:
@@ -6,7 +10,7 @@ on:
 
 jobs:
   auto-merge:
-    name: 🔀 Auto-merge safe updates
+    name: 🔀 Auto-merge Dependabot PRs
     runs-on: ubuntu-latest
     if: github.actor == 'dependabot[bot]'
     

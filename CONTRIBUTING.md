@@ -75,7 +75,27 @@ tests/
 └── run_tests.py         # Test runner
 ```
 
-### 3. Code Quality Checks
+### 3. Automated Dependency Management
+
+This project uses a two-tier Dependabot system:
+
+#### 🔄 **Dependabot Configuration** (`.github/dependabot.yml`)
+- Creates weekly dependency update PRs
+- Groups security updates for priority handling
+- Smart scheduling (Mondays 04:00-05:00 UTC)
+
+#### 🔀 **Auto-merge Workflow** (`🔀 Auto-merge Dependencies`)
+- Automatically merges safe updates (patch/minor)
+- Waits for all CI checks to pass
+- Security updates are prioritized
+- Major version updates require manual review
+
+**What This Means for Contributors:**
+- Dependency updates are handled automatically
+- Focus on feature development, not maintenance
+- Manual review only needed for breaking changes
+
+### 4. Code Quality Checks
 
 Before submitting your changes, run these checks:
 

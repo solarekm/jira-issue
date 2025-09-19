@@ -61,11 +61,11 @@ jira-issue/
 ├── SECURITY.md                    # Security policy
 ├── CHANGELOG.md                   # Version history
 ├── .github/
-│   ├── dependabot.yml            # Automated dependency updates
+│   ├── dependabot.yml            # 🔄 Dependabot configuration (creates PRs)
 │   ├── security.yml              # Security policy configuration
 │   └── workflows/
 │       ├── test.yml              # 🧪 Quality Assurance (CI/CD)
-│       ├── dependabot-auto-merge.yml # 🤖 Dependency Updates
+│       ├── dependabot-auto-merge.yml # 🔀 Auto-merge Dependencies (merges PRs)
 │       └── release.yml           # 🚀 Release Management
 │   # Note: 🔒 Security Analysis via GitHub's default CodeQL setup
 ├── src/                          # Python source code
@@ -89,7 +89,10 @@ jira-issue/
 This action implements enterprise-grade security measures with automated monitoring:
 
 ### 🤖 **Automated Security**
-- **🔄 Dependabot**: Weekly dependency scans with smart auto-merge for safe updates
+- **🔄 Dependabot Ecosystem**: 
+  - **Configuration**: `.github/dependabot.yml` creates weekly dependency update PRs
+  - **Auto-merge**: `🔀 Auto-merge Dependencies` workflow safely merges patch/minor updates
+  - **Smart Grouping**: Security updates prioritized, minor updates batched
 - **🔍 CodeQL**: GitHub's default security analysis with comprehensive query packs
 - **🚨 Security Alerts**: Real-time vulnerability notifications and automatic fixes
 - **🔐 Secret Scanning**: Automatic detection and protection of exposed credentials
