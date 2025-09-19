@@ -7,7 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### 🔧 **Improvements & Fixes**
+### Planned
+- Support for custom fields
+- Bulk issue creation
+- Issue templates
+- Enhanced attachment validation
+
+## [2.1.1] - 2025-09-19
+
+### 🔧 **Documentation & Workflow Improvements**
+
+This patch release focuses on comprehensive documentation updates and workflow fixes.
 
 ### ✨ Added
 - **📚 Complete Documentation Review**: Comprehensive analysis and updates of all *.md files
@@ -15,16 +25,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **📁 Project Structure**: Updated file structure documentation to match reality
 
 ### 🐛 Fixed
+- **🔧 Release Workflow**: Replaced deprecated actions/create-release@v1 with modern gh CLI
 - **📝 Duplicate Headers**: Removed duplicate header in README.md and SECURITY.md
 - **📦 Version References**: Updated all examples from @v1 to @v2 for consistency
-- **🔧 Release Workflow**: Replaced deprecated actions/create-release@v1 with modern gh CLI
-- **📋 File Structure**: Corrected tests/ structure documentation (removed non-existent test_integration.py, added missing files)
-
-### Planned
-- Support for custom fields
-- Bulk issue creation
-- Issue templates
-- Enhanced attachment validation
+- ** File Structure**: Corrected tests/ structure documentation (removed non-existent test_integration.py, added missing files)
+- **🔧 README Corruption**: Fixed corrupted file structure and emoji encoding issues
 
 ## [2.1.0] - 2025-09-19
 
