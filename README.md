@@ -1,11 +1,20 @@
 # 🎯 GitHub Action for Jira Issue Creation
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![GitHub Actions](https://github.com/solarekm/jira-issue/workflows/🧪%20Quality%20Assurance/badge.svg)
+![GitHub Actions](https://github.com/solarekm/jira-issue/workflows/🧪%20Quality%20Assuran      - name: Create Jira Issue
+        uses: solarekm/jira-issue@v2/badge.svg)
 ![CodeQL](https://github.com/solarekm/jira-issue/workflows/CodeQL/badge.svg)
 ![Jira](https://img.shields.io/badge/Jira-Atlassian-blue.svg)
 ![Python](https://img.shields.io/badge/Python-3.9%20|%203.10%20|%203.11%20|%203.12-yellow.svg)
-![Security](https://img.shields.io/badge/Security-Hardened-green.svg)
+![Security](https://img.shields.io/badge/Security-Hardened-gr### 📖 Documentation
+
+- **🏠 Main Documentation**: This README for usage and examples
+- **📚 Examples & Use Cases**: [docs/examples.md](docs/examples.md) - Practical examples and integration patterns
+- **🚨 Troubleshooting Guide**: [docs/troubleshooting.md](docs/troubleshooting.md) - Common issues and solutions
+- **🔧 Development Guide**: [docs/development.md](docs/development.md) - Architecture and development setup
+- **🔒 Security Constraints**: [docs/SECURITY_CONSTRAINTS.md](docs/SECURITY_CONSTRAINTS.md) - Security validation guidelines
+- **📋 API Reference**: [Jira REST API Documentation](https://developer.atlassian.com/cloud/jira/platform/rest/v3/intro/)
+- **⚙️ GitHub Actions**: [GitHub Actions Documentation](https://docs.github.com/en/actions)
 ![Dependabot](https://img.shields.io/badge/Dependabot-Enabled-brightgreen.svg)
 
 A robust, enterprise-grade GitHub Action for creating Jira issues and sub-tasks with advanced security features, comprehensive input validation, modular architecture, and extensive testing. Built with Python 3.11+ and designed for production environments with zero-trust security principles.
@@ -79,7 +88,10 @@ jira-issue/
 │   ├── test_validators.py       # Validation tests
 │   └── test_integration.py      # Integration tests
 └── docs/                         # Documentation
-    └── development.md            # Developer guide
+    ├── development.md            # Developer guide  
+    ├── examples.md              # Practical examples and use cases
+    ├── troubleshooting.md       # Common issues and solutions
+    └── SECURITY_CONSTRAINTS.md  # Security validation guidelines
 ```
 
 ## 🔒 Security Features
@@ -183,7 +195,7 @@ jobs:
     
     steps:
       - name: 🎯 Create Jira Issue
-        uses: solarekm/jira-issue@v1
+        uses: solarekm/jira-issue@v2
         with:
           jira_server: ${{ github.event.inputs.jira_server }}
           jira_username: ${{ secrets.JIRA_USERNAME }}
@@ -236,7 +248,7 @@ jobs:
 
 ```yaml
 - name: Create Sub-task
-  uses: solarekm/jira-issue@v1
+  uses: solarekm/jira-issue@v2
   with:
     jira_server: ${{ secrets.JIRA_SERVER }}
     jira_username: ${{ secrets.JIRA_USERNAME }}
@@ -254,7 +266,7 @@ jobs:
 
 ```yaml
 - name: Create Issue with Attachments
-  uses: solarekm/jira-issue@v1
+  uses: solarekm/jira-issue@v2
   with:
     # ... other parameters ...
     attachment_paths: "./logs/error.log,./screenshots/issue.png,./docs/specification.pdf"
@@ -280,7 +292,7 @@ jobs:
         issue: ${{ fromJson(github.event.inputs.issues) }}
     steps:
       - name: Create Issue
-        uses: solarekm/jira-issue@v1
+        uses: solarekm/jira-issue@v2
         with:
           jira_server: ${{ secrets.JIRA_SERVER }}
           jira_username: ${{ secrets.JIRA_USERNAME }}
@@ -347,7 +359,7 @@ Enable debug logging by setting the `JIRA_DEBUG` environment variable:
 
 ```yaml
 - name: Create Jira Issue (Debug Mode)
-  uses: solarekm/jira-issue@v1
+  uses: solarekm/jira-issue@v2
   env:
     JIRA_DEBUG: "true"
   with:
