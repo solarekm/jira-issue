@@ -6,6 +6,14 @@ The Jira Issue Action handles sensitive information including Jira API tokens an
 
 ## 🛡️ Security Features
 
+## 🛡️ Security Features
+
+### 🤖 Automated Security
+- **Dependabot**: Automatic dependency updates for security vulnerabilities
+- **CodeQL**: Static analysis security testing on every commit
+- **Auto-merge**: Safe security updates are automatically merged
+- **Secret Scanning**: Automatic detection of exposed secrets in code
+
 ### Input Validation
 - **Injection Protection**: All inputs are validated against malicious patterns
 - **Type Validation**: Strict validation of data types and formats
@@ -22,6 +30,12 @@ The Jira Issue Action handles sensitive information including Jira API tokens an
 - **Principle of Least Privilege**: Action requests minimal permissions
 - **Authentication Validation**: Verifies credentials before operations
 - **Permission Checks**: Validates user permissions for operations
+
+### Continuous Security Monitoring
+- **Weekly CodeQL Scans**: Automated security analysis every Sunday
+- **Dependency Alerts**: Real-time notifications for vulnerable dependencies
+- **Security Update Automation**: Critical patches applied automatically
+- **Audit Trail**: Comprehensive logging for security monitoring
 
 ## 🚨 Supported Versions
 

@@ -1,4 +1,4 @@
-name: Test and Validate
+name: "🧪 Test Suite"
 
 on:
   push:
@@ -9,11 +9,11 @@ on:
 
 jobs:
   test:
-    name: Run Tests
+    name: 🧪 Run Tests
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.9, 3.10, 3.11, 3.12]
+        python-version: ["3.9", "3.10", "3.11", "3.12"]
     
     steps:
     - name: Checkout code

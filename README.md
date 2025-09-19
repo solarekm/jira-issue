@@ -58,10 +58,12 @@ jira-issue/
 ├── SECURITY.md                    # Security policy
 ├── CHANGELOG.md                   # Version history
 ├── .github/
-│   ├── dependabot.yml            # Dependency management
+│   ├── dependabot.yml            # Automated dependency updates
+│   ├── security.yml              # Security policy configuration
 │   └── workflows/
-│       ├── ci.yml                # Continuous Integration
-│       ├── security.yml          # Security scanning
+│       ├── test.yml              # Continuous Integration & Testing
+│       ├── codeql.yml            # CodeQL security analysis
+│       ├── dependabot-auto-merge.yml # Auto-merge safe updates
 │       └── release.yml           # Release automation
 ├── src/                          # Python source code
 │   ├── main.py                   # Main entry point
@@ -81,8 +83,15 @@ jira-issue/
 
 ## 🔒 Security Features
 
-This action implements enterprise-grade security measures:
+This action implements enterprise-grade security measures with automated monitoring:
 
+### 🤖 **Automated Security**
+- **🔄 Dependabot**: Weekly dependency scans with auto-merge for safe updates
+- **🔍 CodeQL**: Static analysis security testing on every commit and weekly
+- **🚨 Security Alerts**: Real-time vulnerability notifications
+- **🔐 Secret Scanning**: Automatic detection of exposed credentials
+
+### 🛡️ **Code Protection**
 - **🛡️ Input Sanitization**: Protection against SQL injection, XSS, and command injection
 - **🔍 Pattern Detection**: Advanced malicious pattern recognition
 - **🔐 Secure Authentication**: Safe handling of API tokens and credentials

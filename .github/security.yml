@@ -1,0 +1,51 @@
+# 🔒 GitHub Security Configuration
+
+# Enable automatic security updates for known vulnerabilities
+# This will create PRs automatically when Dependabot detects security issues
+
+# Security Advisories Configuration
+security-advisories:
+  enable: true
+  auto-dismiss-stale: true
+
+# Dependency Graph
+dependency-graph:
+  enable: true
+
+# Vulnerability Alerts
+vulnerability-alerts:
+  enable: true
+
+# Security Updates (Dependabot Security Updates)
+security-updates:
+  enable: true
+  auto-merge:
+    patch: true
+    minor: true
+    # Major versions require manual review
+
+# Code Scanning (CodeQL)
+code-scanning:
+  enable: true
+  default-setup: true
+  
+# Secret Scanning
+secret-scanning:
+  enable: true
+  push-protection: true
+
+# Repository Settings
+settings:
+  # Require signed commits
+  require-signed-commits: false
+  
+  # Branch protection
+  branch-protection:
+    master:
+      required-status-checks:
+        - "🧪 Test Suite"
+        - "🔒 CodeQL Security Analysis"
+      require-branches-to-be-up-to-date: true
+      required-approving-review-count: 1
+      dismiss-stale-reviews: true
+      require-code-owner-reviews: false
