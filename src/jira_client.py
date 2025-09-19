@@ -10,7 +10,10 @@ import os
 from typing import Dict, List, Optional, Any
 from jira import JIRA, JIRAError
 
-from exceptions import JiraConnectionError, JiraOperationError, AttachmentError
+try:
+    from exceptions import JiraConnectionError, JiraOperationError, AttachmentError
+except ImportError:
+    from src.exceptions import JiraConnectionError, JiraOperationError, AttachmentError
 
 
 class JiraClient:

@@ -10,7 +10,10 @@ import os
 from urllib.parse import urlparse
 from typing import Optional, List
 
-from exceptions import ValidationError
+try:
+    from exceptions import ValidationError
+except ImportError:
+    from src.exceptions import ValidationError
 
 
 class InputValidator:
