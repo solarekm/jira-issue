@@ -97,5 +97,6 @@ runs:
         PYTHONPATH: ${{ github.action_path }}/src
       run: |
         echo "Starting Jira issue creation..."
-        python -m src.main
+        cd ${{ github.action_path }}
+        python src/main.py
         echo "Jira issue creation completed"

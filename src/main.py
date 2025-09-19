@@ -7,12 +7,16 @@ the issue creation process with comprehensive error handling and logging.
 """
 
 import sys
+import os
 import logging
 from typing import Dict, Any
 
-from .validators import InputValidator
-from .jira_client import JiraClient
-from .utils import (
+# Add src directory to path for imports
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+from validators import InputValidator
+from jira_client import JiraClient
+from utils import (
     setup_logging, 
     EnvironmentHelper, 
     GitHubIntegration,
