@@ -10,10 +10,7 @@ import os
 from urllib.parse import urlparse
 from typing import Optional, List
 
-try:
-    from exceptions import ValidationError
-except ImportError:
-    from src.exceptions import ValidationError
+from src.exceptions import ValidationError
 
 
 class InputValidator:
@@ -62,6 +59,9 @@ class InputValidator:
                 raise ValidationError("Jira server URL must use HTTP or HTTPS protocol")
             if not parsed.netloc:
                 raise ValidationError("Invalid Jira server URL format - missing hostname")
+        except ValidationError:
+            # Re-raise ValidationError without wrapping
+            raise
         except Exception as e:
             raise ValidationError(f"Invalid Jira server URL: {str(e)}")
         

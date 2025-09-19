@@ -367,6 +367,66 @@ Enable debug logging by setting the `JIRA_DEBUG` environment variable:
 **Issue**: `SecurityError: Potentially malicious input detected`
 - **Solution**: Review input content for special characters or script tags
 
+## ⚠️ Security Limitations & Best Practices
+
+### 🔒 Input Content Restrictions
+
+For security reasons, the action implements strict validation that may reject some legitimate content:
+
+#### **Issue Descriptions & Summaries**
+```yaml
+# ❌ AVOID: Characters that trigger security detection
+description: "Process failed with error code (123) - see output"
+summary: "Fix bug in calculate() function"
+
+# ✅ RECOMMENDED: Use alternative notation
+description: "Process failed with error code 123 - see output"  
+summary: "Fix bug in calculate function"
+```
+
+**Restricted Characters in Text Fields:**
+- Parentheses `()` - Detected as potential shell injection
+- Semicolons `;` - Command separator detection
+- Pipe characters `|` - Command chaining detection
+- Backticks `` ` `` - Command execution detection
+- Dollar signs with parentheses `$()` - Variable expansion detection
+
+**Workarounds:**
+- Use square brackets `[]` instead of parentheses
+- Use "and" instead of `&` or `;`
+- Use "or" instead of `|`
+- Avoid shell-like syntax in descriptions
+
+#### **Attachment File Paths**
+```yaml
+# ❌ REJECTED: Absolute paths and directory traversal
+attachment_paths: "/tmp/report.txt,../config/settings.json"
+
+# ✅ ACCEPTED: Relative paths from workflow root
+attachment_paths: "reports/output.txt,logs/debug.log"
+```
+
+**Path Restrictions:**
+- No absolute paths starting with `/`
+- No directory traversal patterns `../`
+- Files must exist and be readable
+- Maximum file size: 10MB per file
+
+### 🛡️ Security Design Principles
+
+1. **Zero-Trust Validation**: All inputs are treated as potentially malicious
+2. **Defense in Depth**: Multiple layers of security validation
+3. **Fail-Safe Defaults**: Reject ambiguous content rather than risk exposure
+4. **Principle of Least Privilege**: Minimal required permissions only
+
+### 🎯 Testing Considerations
+
+When writing tests that interact with these security features:
+- Use simple, non-shell-like syntax in test content
+- Test with relative file paths only
+- Expect validation errors for security-sensitive patterns
+- Design test cases around the security constraints
+
 ## 🤝 Contributing
 
 We welcome contributions! This project follows modern development practices with comprehensive testing and documentation.

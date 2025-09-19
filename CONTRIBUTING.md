@@ -278,6 +278,73 @@ Brief description of changes
 - Mask sensitive information in logs
 - Follow security best practices
 
+### 🔒 Testing with Security Constraints
+
+The action implements strict security validation that affects test design:
+
+#### **Content Validation Limits**
+When writing tests for descriptions and summaries:
+
+```python
+# ❌ These patterns will be rejected by security validation
+invalid_test_cases = [
+    "Description with shell chars: ; | & $(cmd)",
+    "Process output (error code)",
+    "Function call() syntax",
+    "Pipeline | processing"
+]
+
+# ✅ Use these safe alternatives instead
+valid_test_cases = [
+    "Description with shell chars - semicolon and pipe",
+    "Process output with error code",
+    "Function call syntax",
+    "Pipeline processing"
+]
+```
+
+#### **Attachment Path Testing**
+```python
+# ❌ These paths will be rejected
+invalid_paths = [
+    "/tmp/absolute_path.txt",          # Absolute paths not allowed
+    "../parent/file.txt",              # Directory traversal blocked
+    "/etc/passwd"                      # System file access denied
+]
+
+# ✅ Use relative paths in test fixtures
+@pytest.fixture
+def temp_file():
+    # Create temporary file with relative path
+    with tempfile.NamedTemporaryFile(mode='w', delete=False, 
+                                   dir='./test_files') as f:
+        f.write("Test content")
+        return f.name
+```
+
+#### **Security Test Patterns**
+```python
+def test_malicious_content_detection():
+    """Test that security validation catches malicious patterns."""
+    malicious_inputs = [
+        "test; rm -rf /",
+        "test && malicious",
+        "<script>alert(1)</script>",
+        "test$(whoami)",
+        "test`whoami`"
+    ]
+    for malicious in malicious_inputs:
+        with pytest.raises(ValidationError, match="malicious content"):
+            validator.validate_summary(malicious)
+```
+
+**Key Testing Guidelines:**
+- Design test cases around security constraints
+- Use security-safe content in positive tests
+- Explicitly test security validation in negative tests
+- Expect `ValidationError` for security-sensitive patterns
+- Use relative paths for attachment testing
+
 ## 📚 Resources
 
 ### Documentation

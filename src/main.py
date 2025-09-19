@@ -14,33 +14,16 @@ from typing import Dict, Any
 # Add src directory to path for imports
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-try:
-    from validators import InputValidator
-    from jira_client import JiraClient
-    from utils import (
-        setup_logging, 
-        EnvironmentHelper, 
-        GitHubIntegration,
-        mask_sensitive_data
-    )
-    from exceptions import ValidationError, JiraConnectionError, JiraOperationError
-except ImportError:
-    # Fallback for package imports
-    from src.validators import InputValidator
-    from src.jira_client import JiraClient
-    from src.utils import (
-        setup_logging, 
-        EnvironmentHelper, 
-        GitHubIntegration,
-        mask_sensitive_data
-    )
-    from src.exceptions import ValidationError, JiraConnectionError, JiraOperationError
-from .exceptions import (
-    JiraActionError,
-    ValidationError,
-    JiraConnectionError,
-    JiraOperationError
+# Direct imports from src package
+from src.validators import InputValidator
+from src.jira_client import JiraClient
+from src.utils import (
+    setup_logging, 
+    EnvironmentHelper, 
+    GitHubIntegration,
+    mask_sensitive_data
 )
+from src.exceptions import ValidationError, JiraConnectionError, JiraOperationError, JiraActionError
 
 
 def validate_and_prepare_config() -> Dict[str, Any]:
