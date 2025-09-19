@@ -1,11 +1,14 @@
 # 🎯 GitHub Action for Jira Issue Creation
 
+# 🎯 GitHub Action for Jira Issue Creation
+
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-Compatible-green.svg)
+![GitHub Actions](https://github.com/solarekm/jira-issue/workflows/🧪%20Quality%20Assurance/badge.svg)
+![CodeQL](https://github.com/solarekm/jira-issue/workflows/CodeQL/badge.svg)
 ![Jira](https://img.shields.io/badge/Jira-Atlassian-blue.svg)
-![Python](https://img.shields.io/badge/Python-3.11+-yellow.svg)
+![Python](https://img.shields.io/badge/Python-3.9%20|%203.10%20|%203.11%20|%203.12-yellow.svg)
 ![Security](https://img.shields.io/badge/Security-Hardened-green.svg)
-![Tests](https://img.shields.io/badge/Tests-Comprehensive-brightgreen.svg)
+![Dependabot](https://img.shields.io/badge/Dependabot-Enabled-brightgreen.svg)
 
 A robust, enterprise-grade GitHub Action for creating Jira issues and sub-tasks with advanced security features, comprehensive input validation, modular architecture, and extensive testing. Built with Python 3.11+ and designed for production environments with zero-trust security principles.
 
@@ -61,10 +64,10 @@ jira-issue/
 │   ├── dependabot.yml            # Automated dependency updates
 │   ├── security.yml              # Security policy configuration
 │   └── workflows/
-│       ├── test.yml              # Continuous Integration & Testing
-│       ├── codeql.yml            # CodeQL security analysis
-│       ├── dependabot-auto-merge.yml # Auto-merge safe updates
-│       └── release.yml           # Release automation
+│       ├── test.yml              # 🧪 Quality Assurance (CI/CD)
+│       ├── dependabot-auto-merge.yml # 🤖 Dependency Updates
+│       └── release.yml           # 🚀 Release Management
+│   # Note: 🔒 Security Analysis via GitHub's default CodeQL setup
 ├── src/                          # Python source code
 │   ├── main.py                   # Main entry point
 │   ├── jira_client.py           # Jira API client
@@ -86,10 +89,11 @@ jira-issue/
 This action implements enterprise-grade security measures with automated monitoring:
 
 ### 🤖 **Automated Security**
-- **🔄 Dependabot**: Weekly dependency scans with auto-merge for safe updates
-- **🔍 CodeQL**: Static analysis security testing on every commit and weekly
-- **🚨 Security Alerts**: Real-time vulnerability notifications
-- **🔐 Secret Scanning**: Automatic detection of exposed credentials
+- **🔄 Dependabot**: Weekly dependency scans with smart auto-merge for safe updates
+- **🔍 CodeQL**: GitHub's default security analysis with comprehensive query packs
+- **🚨 Security Alerts**: Real-time vulnerability notifications and automatic fixes
+- **🔐 Secret Scanning**: Automatic detection and protection of exposed credentials
+- **🛡️ Branch Protection**: Automated enforcement of security policies
 
 ### 🛡️ **Code Protection**
 - **🛡️ Input Sanitization**: Protection against SQL injection, XSS, and command injection
